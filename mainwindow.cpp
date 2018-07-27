@@ -327,7 +327,9 @@ void MainWindow::currentIndexChanged()
             currentSettings.sendStringCache = hexToQString(false, now.sendCache);
         }
         /* 将小写换成大写 */
+        int curPos = ui->sendLineEdit->cursorPosition();
         ui->sendLineEdit->setText(ui->sendLineEdit->text().toUpper());
+        ui->sendLineEdit->setCursorPosition(curPos);
     }
 
     // 更新发送方式
