@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "str_util.h"
+#include "commonhelper.h"
 
 #include <QDebug>
 #include <QImageReader>
@@ -11,36 +13,15 @@
 #include <QSettings>
 #include <QTimer>
 
+#define VERSION                 "0.0.5"
+#define AUTHOR                  "kent"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     init();
-}
-
-/**
- * @brief getDateFromMacro
- * @param time __DATE__
- * @return
- */
-static time_t getDateFromMacro(char const *time) {
-    char s_month[5];
-    int month, day, year;
-    struct tm t;
-    memset(&t, 0, sizeof(tm));
-    static const char month_names[] = "JanFebMarAprMayJunJulAugSepOctNovDec";
-
-    sscanf(time, "%s %d %d", s_month, &day, &year);
-
-    month = (strstr(month_names, s_month)-month_names)/3;
-
-    t.tm_mon = month;
-    t.tm_mday = day;
-    t.tm_year = year - 1900;
-    t.tm_isdst = -1;
-
-    return mktime(&t);
 }
 
 MainWindow::Settings MainWindow::doSettings(bool isWrite, Settings inSettings)
@@ -120,7 +101,7 @@ void MainWindow::init()
     ui->baudRateBox->setInsertPolicy(QComboBox::NoInsert);
 
     // 字体大小
-    font = QFont( "Arial", 8);
+    font = QFont("Arial", 8);
 
     // 只能输入数字的正则
     QValidator *numberOnlyValidator; //检验器，只允许输入数字
@@ -128,8 +109,8 @@ void MainWindow::init()
     numberOnlyValidator = new QRegExpValidator(regx, mTimerSendLineEdit);
 
     // 设置窗口标题
-    QDateTime dt = QDateTime::fromTime_t( (uint)getDateFromMacro(__DATE__));
-    this->setWindowTitle("sscom for linux 0.4, 作者:kangear " + dt.toString("yyyy/MM")); //
+    QDateTime dt = QDateTime::fromTime_t((uint)CommonHelper::getDateFromMacro(__DATE__));
+    this->setWindowTitle("sscom for linux " VERSION ", 作者: " AUTHOR " " + dt.toString("yyyy/MM")); //
 
     // 状态
     isOn = false;
@@ -247,58 +228,6 @@ void MainWindow::serialPortChanged()
     updateSettings();
 }
 
-/** 将hex(61 62 63 64 65 66 67) to String(abcdefg) */
-static QString hexToQString(bool isDebug, QString hexStr) {
-    if(isDebug) qDebug() << __func__ << ": " << hexStr;
-    QString ret;
-    QStringList list = hexStr.split(" ", QString::SkipEmptyParts);
-    for(QString qs:list) {
-        bool bStatus = false;
-        int a = qs.toInt(&bStatus, 16);
-        if(bStatus && (qs.length() == 2)) {
-            QString sA = QString(QChar(a));
-            if(isDebug) qDebug() << "a:" << a << "sA:" << sA << "qs:" + qs;
-            ret.append(sA);
-        } else {/* 转换失败，使用默认字体串 */
-            if(isDebug) qDebug() << "error!!!";
-//            ret = "abcdefg";
-            break;
-        }
-    }
-    return ret;
-}
-
-/** 将String(abcdefg) to Hex(61 62 63 64 65 66 67) */
-static QString stringToHex(bool isDebug, QString str) {
-    if(isDebug) qDebug() << __func__ << ": " << str;
-    QString ret;
-    /* 将String(abcdefg) to Hex */
-    for(int i=0; i<str.length(); i++) {
-        /* 将字符串中字符转换成QChar */
-        QChar random = str.at(i).toLatin1();
-        QString hex;
-        QString str1;
-        /* 将QChar转换成unicode */
-        hex.setNum(random.unicode(), 16);
-        /**
-         * 由于unicode位数随机，所以需要根据情况进行格式化
-         * 只保留末两位，如果不够两位补0
-         */
-        if(hex.length() >= 2) {
-            if(isDebug) qDebug() << "hex.length() >= 2 hex:" << hex;
-            str1 = hex.mid(hex.length() - 2, hex.length());
-        } else if(hex.length() == 1) {
-            if(isDebug) qDebug() << "hex.length() == 1 hex:" << hex;
-            str1 = hex.prepend("0");
-        } else {
-            if(isDebug) qDebug() << "else";
-            str1 = "";
-        }
-        ret.append(str1.toUpper() + " ");
-    }
-    return ret;
-}
-
 /**
  * @brief MainWindow::currentIndexChanged
  * @param idx
@@ -306,7 +235,7 @@ static QString stringToHex(bool isDebug, QString str) {
  */
 void MainWindow::currentIndexChanged()
 {
-    // qDebug() << __func__;
+    qDebug() << __func__;
     Settings old = currentSettings;
     updateSettings();
     Settings now = currentSettings;
@@ -324,7 +253,7 @@ void MainWindow::currentIndexChanged()
         currentSettings.sendStringCache = now.sendCache;
         /* 如果是16进制状态，需要将16进制数转换成字符串 */
         if(now.isHexSend) {
-            currentSettings.sendStringCache = hexToQString(false, now.sendCache);
+            currentSettings.sendStringCache = str_util::hexToString(now.sendCache);
         }
         /* 将小写换成大写 */
         int curPos = ui->sendLineEdit->cursorPosition();
@@ -338,11 +267,11 @@ void MainWindow::currentIndexChanged()
         QString inputStr = ui->sendLineEdit->text();
         if(now.isHexSend) {
             /* 将原数据保存 */
-            currentSettings.sendCache = stringToHex(false, inputStr);
+            currentSettings.sendCache = str_util::stringToHex(inputStr);
             currentSettings.sendStringCache = inputStr;
         } else {
             /* 将数据保存 */
-            QString tmp = hexToQString(false ,inputStr);
+            QString tmp = str_util::hexToString(inputStr);
             currentSettings.sendCache = tmp;
             currentSettings.sendStringCache = tmp;
         }
@@ -350,7 +279,7 @@ void MainWindow::currentIndexChanged()
         ui->sendLineEdit->setText(currentSettings.sendCache);
     }
 
-    if(DEBUG) qDebug() << "sendStringCache:" << stringToHex(false, currentSettings.sendStringCache);
+    qDebug() << "sendStringCache:" << str_util::stringToHex(currentSettings.sendStringCache);
 
     // 更新AutoSend Qtimer
     if(old.isTimerSend != now.isTimerSend) {
@@ -575,8 +504,8 @@ void MainWindow::updateUi(Settings p)
                           .arg(p.stringStopBits).arg(p.stringParity).arg(p.stringFlowControl));
 
     // 更新接收发送总量
-    if(DEBUG) qDebug() <<"p.receiveNum:" << p.receiveNum;
-    if(DEBUG) qDebug() <<"p.sendNum:" << p.sendNum;
+    qDebug() <<"p.receiveNum:" << p.receiveNum;
+    qDebug() <<"p.sendNum:" << p.sendNum;
     mReceiveLabel->setText(tr("R:%1").arg(p.receiveNum));
     mSendLabel->setText(tr("S:%1").arg(p.sendNum));
 }
@@ -663,7 +592,7 @@ void MainWindow::writeData()
     }
 
     QString text = currentSettings.sendStringCache;
-    if(DEBUG) qDebug() << __func__ << ":" << text;
+    qDebug() << __func__ << ": " << text;
     if(text.length() !=0 && currentSettings.sendNewLineEnabled)
         text += "\r\n";
 
@@ -674,7 +603,7 @@ void MainWindow::writeData()
         currentSettings.sendNum += len;
         updateUi(currentSettings);
     }
-    if(DEBUG) qDebug() <<"currentSettings.sendNum:" << currentSettings.sendNum;
+    qDebug() <<"currentSettings.sendNum:" << currentSettings.sendNum;
 }
 //! [6]
 //! [7]
@@ -688,12 +617,11 @@ void MainWindow::readData()
 
     // 更新显示长度
     qint32 len = data.length();
-    if(DEBUG) qDebug() <<"len:" << len;
+    qDebug() <<"len: " << len;
     if(len >= 0) {
         currentSettings.receiveNum += len;
         currentIndexChanged();
     }
-
 
     // 根据设置来判断是否需要转换成HEX
 

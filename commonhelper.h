@@ -4,17 +4,11 @@
 #include <QObject>
 #include <QHostAddress>
 
-class CommonHelper : public QObject
+class CommonHelper
 {
-    Q_OBJECT
 public:
-    explicit CommonHelper(QObject *parent = 0);
-    QHostAddress getLocalHostIP();
-
-signals:
-
-public slots:
-
+    static QHostAddress getLocalHostIP();
+    static time_t getDateFromMacro(char const *time);
 };
 
 #endif // COMMONHELPER_H
