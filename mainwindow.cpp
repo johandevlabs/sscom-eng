@@ -24,6 +24,22 @@ MainWindow::MainWindow(QWidget *parent) :
     init();
 }
 
+void MainWindow::appendReceiveBrowser(QString text, bool direction)
+{
+    QString direction_str;
+
+    direction ? direction_str = " <- " : direction_str = " -> ";
+    if (currentSettings.isTimeDisplay) {
+        text = CommonHelper::getCurrTimeStr() + direction_str + text;
+    }
+    ui->receive_textBrowser->setText(ui->receive_textBrowser->toPlainText() + text);
+
+    // 将光标移动到最后位置
+    QTextCursor tmpCursor = ui->receive_textBrowser->textCursor();
+    tmpCursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor, 4);
+    ui->receive_textBrowser->setTextCursor(tmpCursor);
+}
+
 MainWindow::Settings MainWindow::doSettings(bool isWrite, Settings inSettings)
 {
     Settings in =  inSettings;
@@ -46,6 +62,7 @@ MainWindow::Settings MainWindow::doSettings(bool isWrite, Settings inSettings)
         settings.setValue("isDtr", in.isDtr);
         settings.setValue("isRts", in.isRts);
         settings.setValue("isHexDisplay", in.isHexDisplay);
+        settings.setValue("isTimerSend", in.isTimeDisplay);
         settings.setValue("isHexSend", in.isHexSend);
         // 和Windows版本同步，不保存定时发送开关
         settings.setValue("isTimerSend", DEF_SETTINGS.isTimerSend);
@@ -68,6 +85,7 @@ MainWindow::Settings MainWindow::doSettings(bool isWrite, Settings inSettings)
         out.isDtr              = settings.value("isDtr", DEF_SETTINGS.isDtr).toBool();
         out.isRts              = settings.value("isRts", DEF_SETTINGS.isRts).toBool();
         out.isHexDisplay       = settings.value("isHexDisplay", DEF_SETTINGS.isHexDisplay).toBool();
+        out.isTimeDisplay      = settings.value("isTimeDisplay", DEF_SETTINGS.isTimeDisplay).toBool();
         out.isHexSend          = settings.value("isHexSend", DEF_SETTINGS.isHexSend).toBool();
         out.isTimerSend        = settings.value("isTimerSend", DEF_SETTINGS.isTimerSend).toBool();
         out.timerLength        = settings.value("timeTimerSend", DEF_SETTINGS.timerLength).toInt();
@@ -214,7 +232,7 @@ void MainWindow::init()
             this, SLOT(currentIndexChanged()));
     connect(ui->hexsend_checkBox, SIGNAL(stateChanged(int)),
             this, SLOT(currentIndexChanged()));
-    connect(ui->newLineCheckBox, SIGNAL(stateChanged(int)),
+    connect(ui->newline_checkBox, SIGNAL(stateChanged(int)),
             this, SLOT(currentIndexChanged()));
     connect(ui->timer_lineEdit, SIGNAL(textChanged(const QString &)),
             this, SLOT(currentIndexChanged()));
@@ -378,7 +396,7 @@ void MainWindow::fillPortsParameters()
     ui->rts_checkBox->setChecked(currentSettings.isRts);
     ui->hexdisplay_checkBox->setChecked(currentSettings.isHexDisplay);
     ui->hexsend_checkBox->setChecked(currentSettings.isHexSend);
-    ui->newLineCheckBox->setChecked(currentSettings.sendNewLineEnabled);
+    ui->newline_checkBox->setChecked(currentSettings.sendNewLineEnabled);
     ui->timersend_checkBox->setChecked(currentSettings.isTimerSend);
     ui->timer_lineEdit->setText(QString::number(currentSettings.timerLength));
     ui->sendLineEdit->setText(currentSettings.sendCache);
@@ -500,13 +518,13 @@ void MainWindow::updateSettings()
     currentSettings.localEchoEnabled = false; //ui->localEchoCheckBox->isChecked();
 
     // new line
-    currentSettings.sendNewLineEnabled = ui->newLineCheckBox->isChecked();
+    currentSettings.sendNewLineEnabled = ui->newline_checkBox->isChecked();
 
     currentSettings.isDtr = ui->dtr_checkBox->isChecked();
     currentSettings.isRts = ui->rts_checkBox->isChecked();
     currentSettings.isHexDisplay = ui->hexdisplay_checkBox->isChecked();
     currentSettings.isHexSend = ui->hexsend_checkBox->isChecked();
-    currentSettings.sendNewLineEnabled = ui->newLineCheckBox->isChecked();
+    currentSettings.sendNewLineEnabled = ui->newline_checkBox->isChecked();
     currentSettings.isTimerSend = ui->timersend_checkBox->isChecked();
     currentSettings.timerLength = ui->timer_lineEdit->text().toInt();
     currentSettings.sendCache = ui->sendLineEdit->text();
@@ -533,6 +551,7 @@ bool MainWindow::setParameter(QSerialPort *serial, Settings settings)
 {
     bool ret;
     Settings p = settings;
+
     if (serial->setBaudRate(p.baudRate)
             && serial->setDataBits(p.dataBits)
             && serial->setParity(p.parity)
@@ -549,6 +568,7 @@ bool MainWindow::openSerialPort()
 {
     bool ret = false;
     Settings p = currentSettings;
+
     serial->setPortName(p.name);
     if (serial->open(QIODevice::ReadWrite)) {
         if (setParameter(serial, p)) {
@@ -564,13 +584,12 @@ bool MainWindow::openSerialPort()
             ret = true;
         } else {
             serial->close();
-            QMessageBox::critical(this, tr("Error"), serial->errorString());
-            ui->statusBar->showMessage(tr("Open error"));
+            QMessageBox::critical(this, "Error", serial->errorString());
+            ui->statusBar->showMessage("Configure error");
         }
     } else {
-        QMessageBox::critical(this, tr("Error"), serial->errorString());
-
-        ui->statusBar->showMessage(tr("Configure error"));
+        QMessageBox::critical(this, "Error", serial->errorString());
+        ui->statusBar->showMessage("Open error");
     }
 
     return ret;
@@ -611,13 +630,18 @@ void MainWindow::onSendButtonRelease()
 void MainWindow::writeData()
 {
     if(!serial->isOpen()) {
+        qWarning() << "serial isn't open" << endl;
         return;
     }
 
     QString text = currentSettings.sendStringCache;
-    qDebug() << __func__ << ": " << text;
-    if(text.length() !=0 && currentSettings.sendNewLineEnabled)
+
+    qDebug() << "send: " << text << ", len: " << text.length() << endl;
+    if(text.length() != 0 && currentSettings.sendNewLineEnabled)
         text += "\r\n";
+
+    // 追加到接收窗口
+    appendReceiveBrowser(text, true);
 
     QByteArray data = text.toLatin1();
     qint32 len = serial->write(data);
@@ -626,7 +650,6 @@ void MainWindow::writeData()
         currentSettings.sendNum += len;
         updateUi(currentSettings);
     }
-    qDebug() <<"currentSettings.sendNum:" << currentSettings.sendNum;
 }
 //! [6]
 //! [7]
@@ -634,24 +657,16 @@ void MainWindow::readData()
 {
     QByteArray data = serial->readAll();
     QString str = QString::fromLatin1(data.data());
-    QString res = str.toLatin1().toHex().toUpper();
-    QString a = ui->receive_textBrowser->toPlainText();
-    ui->receive_textBrowser->setText(a + data);
+    int len = str.length();
+
+    appendReceiveBrowser(str, false);
 
     // 更新显示长度
-    qint32 len = data.length();
-    qDebug() <<"len: " << len;
+    qDebug() << "receive: " << str << ", len: " << len << endl;
     if(len >= 0) {
         currentSettings.receiveNum += len;
         currentIndexChanged();
     }
-
-    // 根据设置来判断是否需要转换成HEX
-
-    // 将光标移动到最后位置
-    QTextCursor tmpCursor = ui->receive_textBrowser->textCursor();
-    tmpCursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor, 4);
-    ui->receive_textBrowser->setTextCursor(tmpCursor);
 }
 //! [7]
 
@@ -761,4 +776,9 @@ void MainWindow::on_sendLineEdit_returnPressed()
 void MainWindow::on_serialPortInfoListBox_clicked()
 {
     fillPortsInfo();
+}
+
+void MainWindow::on_timedisplay_checkBox_stateChanged(__attribute__((unused)) int state)
+{
+    currentSettings.isTimeDisplay = ui->timedisplay_checkBox->isChecked();
 }

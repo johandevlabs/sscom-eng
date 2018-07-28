@@ -39,6 +39,7 @@ public:
         bool isRts;
         bool isHexDisplay;
         bool isHexSend;
+        bool isTimeDisplay;
         bool isTimerSend;
         qint32 timerLength;
         QString sendCache;
@@ -60,6 +61,7 @@ public:
         false,
         true,
         "",
+        false,
         false,
         false,
         false,
@@ -91,6 +93,8 @@ private slots:
     void on_sendLineEdit_returnPressed();
 
     void on_serialPortInfoListBox_clicked();
+
+    void on_timedisplay_checkBox_stateChanged(int state);
 
 private:
     Ui::MainWindow *ui;
@@ -134,6 +138,7 @@ private:
     bool setParameter(QSerialPort *serial, Settings settings);
     Settings doSettings(bool isWrite, Settings inSettings);
     QTimer *autoSendTimer;
+    void appendReceiveBrowser(QString text, bool direction);
 };
 
 #endif // MAINWINDOW_H

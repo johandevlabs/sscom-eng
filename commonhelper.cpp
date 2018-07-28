@@ -1,4 +1,6 @@
 #include "commonhelper.h"
+
+#include <QDateTime>
 #include <QHostAddress>
 #include <QNetworkInterface>
 
@@ -43,4 +45,9 @@ time_t CommonHelper::getDateFromMacro(char const *time)
     t.tm_isdst = -1;
 
     return mktime(&t);
+}
+
+QString CommonHelper::getCurrTimeStr()
+{
+    return QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss.zzz");
 }

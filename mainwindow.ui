@@ -356,17 +356,79 @@
       <height>181</height>
      </size>
     </property>
-    <widget class="QWidget" name="layoutWidget">
+    <widget class="QTextBrowser" name="textBrowser">
      <property name="geometry">
       <rect>
-       <x>6</x>
-       <y>0</y>
-       <width>471</width>
-       <height>182</height>
+       <x>213</x>
+       <y>1</y>
+       <width>321</width>
+       <height>149</height>
       </rect>
      </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0" colspan="2">
+     <property name="minimumSize">
+      <size>
+       <width>212</width>
+       <height>148</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>150</y>
+       <width>461</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_8">
+      <item>
+       <widget class="QLineEdit" name="sendLineEdit"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="send_pushButton">
+        <property name="maximumSize">
+         <size>
+          <width>71</width>
+          <height>27</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>发送</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QLabel" name="label_7">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>65</y>
+       <width>101</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>SSCOM LINUX</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>0</y>
+       <width>95</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_10">
+      <item>
        <widget class="QPushButton" name="openserial_pushButton">
         <property name="maximumSize">
          <size>
@@ -384,87 +446,7 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="5" colspan="2">
-       <widget class="QCheckBox" name="hexsend_checkBox">
-        <property name="minimumSize">
-         <size>
-          <width>81</width>
-          <height>22</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>81</width>
-          <height>22</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>HEX发送</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1" colspan="3">
-       <widget class="QCheckBox" name="rts_checkBox">
-        <property name="text">
-         <string>RTS</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="6">
-       <widget class="QLabel" name="label_8">
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"> qproperty-wordWrap: true;</string>
-        </property>
-        <property name="text">
-         <string>ms/次</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0" colspan="9">
-       <widget class="QLineEdit" name="sendLineEdit"/>
-      </item>
-      <item row="0" column="5" colspan="2">
-       <widget class="QCheckBox" name="hexdisplay_checkBox">
-        <property name="minimumSize">
-         <size>
-          <width>81</width>
-          <height>22</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>81</width>
-          <height>22</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>HEX显示</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QCheckBox" name="dtr_checkBox">
-        <property name="text">
-         <string>DTR</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="3" colspan="3">
-       <widget class="QLineEdit" name="timer_lineEdit">
-        <property name="inputMethodHints">
-         <set>Qt::ImhFormattedNumbersOnly</set>
-        </property>
-        <property name="text">
-         <string>1000</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2" colspan="2">
+      <item>
        <widget class="QLabel" name="led_label">
         <property name="minimumSize">
          <size>
@@ -494,26 +476,91 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="4" colspan="2">
-       <widget class="QPushButton" name="send_pushButton">
-        <property name="maximumSize">
-         <size>
-          <width>71</width>
-          <height>27</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>106</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_9">
+      <item>
+       <widget class="QCheckBox" name="dtr_checkBox">
         <property name="text">
-         <string>发送</string>
+         <string>DTR</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="5" colspan="2">
-       <widget class="QCheckBox" name="newLineCheckBox">
+      <item>
+       <widget class="QCheckBox" name="rts_checkBox">
+        <property name="text">
+         <string>RTS</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>121</x>
+       <y>1</y>
+       <width>83</width>
+       <height>113</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QCheckBox" name="hexdisplay_checkBox">
+        <property name="minimumSize">
+         <size>
+          <width>81</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>81</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>HEX显示</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="hexsend_checkBox">
+        <property name="minimumSize">
+         <size>
+          <width>81</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>81</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>HEX发送</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="timedisplay_checkBox">
+        <property name="text">
+         <string>显示时间</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="newline_checkBox">
         <property name="minimumSize">
          <size>
           <width>81</width>
@@ -534,18 +581,26 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="7" rowspan="5">
-       <widget class="QTextBrowser" name="textBrowser">
-        <property name="minimumSize">
+     </layout>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>120</y>
+       <width>191</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_11">
+      <item>
+       <widget class="QCheckBox" name="timersend_checkBox">
+        <property name="maximumSize">
          <size>
-          <width>212</width>
-          <height>148</height>
+          <width>80</width>
+          <height>16777215</height>
          </size>
         </property>
-       </widget>
-      </item>
-      <item row="3" column="0" colspan="3">
-       <widget class="QCheckBox" name="timersend_checkBox">
         <property name="text">
          <string>定时发送</string>
         </property>
@@ -554,8 +609,30 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="0" colspan="3">
-       <widget class="QLabel" name="label_9">
+      <item>
+       <widget class="QLineEdit" name="timer_lineEdit">
+        <property name="maximumSize">
+         <size>
+          <width>60</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="inputMethodHints">
+         <set>Qt::ImhFormattedNumbersOnly</set>
+        </property>
+        <property name="text">
+         <string>1000</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_8">
+        <property name="maximumSize">
+         <size>
+          <width>70</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="font">
          <font>
           <pointsize>10</pointsize>
@@ -565,14 +642,7 @@
          <string notr="true"> qproperty-wordWrap: true;</string>
         </property>
         <property name="text">
-         <string>字符串输入框:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="5">
-       <widget class="QLabel" name="label_7">
-        <property name="text">
-         <string>SSCOM FOR LINUX</string>
+         <string>ms/次</string>
         </property>
        </widget>
       </item>
