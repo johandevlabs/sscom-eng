@@ -19,10 +19,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    commonhelper.cpp
+    commonhelper.cpp \
+    str_util.cpp
 
 HEADERS  += mainwindow.h \
-    commonhelper.h
+    commonhelper.h \
+    str_util.h
 
 FORMS    += mainwindow.ui
 
@@ -32,3 +34,5 @@ RESOURCES += \
     images.qrc
 
 QMAKE_CXXFLAGS += -std=c++0x
+
+#DEFINES += QT_NO_DEBUG_OUTPUT

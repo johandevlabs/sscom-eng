@@ -110,7 +110,10 @@ void MainWindow::init()
 
     // 设置窗口标题
     QDateTime dt = QDateTime::fromTime_t((uint)CommonHelper::getDateFromMacro(__DATE__));
-    this->setWindowTitle("sscom for linux " VERSION ", 作者: " AUTHOR " " + dt.toString("yyyy/MM")); //
+    this->setWindowTitle("sscom for linux " VERSION ", 作者: " AUTHOR " " + dt.toString("yyyy/MM"));
+
+    // set windows ico
+    this->setWindowIcon(QIcon(":/ico/sscom"));
 
     // 状态
     isOn = false;
