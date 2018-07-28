@@ -88,6 +88,10 @@ private slots:
 
     void on_hexsend_checkBox_released();
 
+    void on_sendLineEdit_returnPressed();
+
+    void on_serialPortInfoListBox_clicked();
+
 private:
     Ui::MainWindow *ui;
     QStatusBar *mStatusBar;
@@ -109,6 +113,7 @@ private:
     /** 文件路径 */
     QString mFilePath;
     QPushButton *mSendButton;
+    QLineEdit *mSendLineEdit;
     QPushButton *mSendFileButton;
     QPushButton *mOpenSerialButton;
 

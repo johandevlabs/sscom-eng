@@ -20,11 +20,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     commonhelper.cpp \
-    str_util.cpp
+    str_util.cpp \
+    mycombobox.cpp
 
 HEADERS  += mainwindow.h \
     commonhelper.h \
-    str_util.h
+    str_util.h \
+    mycombobox.h
 
 FORMS    += mainwindow.ui
 

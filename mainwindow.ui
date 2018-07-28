@@ -65,7 +65,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="serialPortInfoListBox">
+        <widget class="MyComboBox" name="serialPortInfoListBox">
          <property name="minimumSize">
           <size>
            <width>85</width>
@@ -742,6 +742,16 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>MyComboBox</class>
+   <extends>QComboBox</extends>
+   <header>mycombobox.h</header>
+   <slots>
+    <signal>clicked()</signal>
+   </slots>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

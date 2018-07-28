@@ -91,6 +91,7 @@ void MainWindow::init()
 
     mStatusBar = ui->statusBar;
     mSendButton = ui->send_pushButton;
+    mSendLineEdit = ui->sendLineEdit;
     mSendFileButton = ui->sendfile_pushButton;
     mOpenSerialButton = ui->openserial_pushButton;
     mLedLabel = ui->led_label;
@@ -112,7 +113,7 @@ void MainWindow::init()
     QDateTime dt = QDateTime::fromTime_t((uint)CommonHelper::getDateFromMacro(__DATE__));
     this->setWindowTitle("sscom for linux " VERSION ", 作者: " AUTHOR " " + dt.toString("yyyy/MM"));
 
-    // set windows ico
+    // 设置窗口图标
     this->setWindowIcon(QIcon(":/ico/sscom"));
 
     // 状态
@@ -164,10 +165,12 @@ void MainWindow::init()
 
     // 2.更新文字
     mOpenSerialButton->setText("打开串口");
-    // 3.使能发送按键
+    // 3.禁止发送按键
     mSendButton->setDisabled(true);
-    // 4.使能发送文件按键
+    // 4.禁止发送文件按键
     mSendFileButton->setDisabled(true);
+    // 5.禁止发送文件框
+    mSendLineEdit->setDisabled(true);
 
     //! [1]
     serial = new QSerialPort(this);
@@ -329,9 +332,13 @@ void MainWindow::fillPortsParameters()
 {
     // fill baud rate (is not the entire list of available values,
     // desired values??, add your independently)
+    ui->baudRateBox->addItem(QStringLiteral("1200"), QSerialPort::Baud1200);
+    ui->baudRateBox->addItem(QStringLiteral("2400"), QSerialPort::Baud2400);
+    ui->baudRateBox->addItem(QStringLiteral("4800"), QSerialPort::Baud4800);
     ui->baudRateBox->addItem(QStringLiteral("9600"), QSerialPort::Baud9600);
     ui->baudRateBox->addItem(QStringLiteral("19200"), QSerialPort::Baud19200);
     ui->baudRateBox->addItem(QStringLiteral("38400"), QSerialPort::Baud38400);
+    ui->baudRateBox->addItem(QStringLiteral("57600"), QSerialPort::Baud57600);
     ui->baudRateBox->addItem(QStringLiteral("115200"), QSerialPort::Baud115200);
     ui->baudRateBox->addItem(QStringLiteral("Custom"));
 
@@ -421,6 +428,10 @@ void MainWindow::on_openfile_pushButton_released()
 
 void MainWindow::fillPortsInfo()
 {
+    int curIndex = 0;
+    QString curTxt = ui->serialPortInfoListBox->currentText();
+    qDebug() << "current text: " << curTxt << endl;
+
     ui->serialPortInfoListBox->clear();
     static const QString blankString = QObject::tr("N/A");
     QString description;
@@ -437,6 +448,11 @@ void MainWindow::fillPortsInfo()
              << (info.productIdentifier() ? QString::number(info.productIdentifier(), 16) : blankString);
 
         ui->serialPortInfoListBox->addItem(list.first(), list);
+        if (info.portName().compare(curTxt) == 0) {
+            qDebug() << "find the current selected index: " << curIndex << ", text: " << info.portName() << endl;
+            ui->serialPortInfoListBox->setCurrentIndex(curIndex);
+        }
+        curIndex++;
     }
 }
 
@@ -543,6 +559,8 @@ bool MainWindow::openSerialPort()
             mSendButton->setDisabled(false);
             // 4.使能发送文件按键
             mSendFileButton->setDisabled(false);
+            // 5.使能发送文件框
+            mSendLineEdit->setDisabled(false);
             ret = true;
         } else {
             serial->close();
@@ -565,10 +583,12 @@ void MainWindow::closeSerialPort()
     mLedLabel->setPixmap(QPixmap(":/led/off"));
     // 2.更新文字
     mOpenSerialButton->setText("打开串口");
-    // 3.使能发送按键
+    // 3.禁止发送按键
     mSendFileButton->setDisabled(true);
-    // 4.使能发送文件按键
+    // 4.禁止发送文件按键
     mSendButton->setDisabled(true);
+    // 5.禁止发送文件框
+    mSendLineEdit->setDisabled(true);
     serial->close();
 }
 //! [5]
@@ -730,4 +750,16 @@ void MainWindow::on_clear_pushButton_released()
 /** 16进制发送 checkbox按下时 */
 void MainWindow::on_hexsend_checkBox_released()
 {
+}
+
+// 回车发送AT指令
+void MainWindow::on_sendLineEdit_returnPressed()
+{
+    onSendButtonRelease();
+}
+
+// 点击刷新串口列表
+void MainWindow::on_serialPortInfoListBox_clicked()
+{
+    fillPortsInfo();
 }
