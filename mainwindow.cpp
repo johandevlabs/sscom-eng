@@ -744,7 +744,6 @@ void MainWindow::handleError(QSerialPort::SerialPortError error)
 void MainWindow::on_clear_pushButton_released()
 {
     ui->receive_textBrowser->clear();
-    currentIndexChanged();
 }
 
 /** 16进制发送 checkbox按下时 */
