@@ -27,12 +27,32 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::appendReceiveBrowser(QString text, bool direction)
 {
     QString direction_str;
+    QString contents;
 
-    direction ? direction_str = " <- " : direction_str = " -> ";
-    if (currentSettings.isTimeDisplay) {
-        text = CommonHelper::getCurrTimeStr() + direction_str + text;
+    // no display time and send data
+    if (!currentSettings.isTimeDisplay && direction) {
+        return;
     }
-    ui->receive_textBrowser->setText(ui->receive_textBrowser->toPlainText() + text);
+
+    contents = ui->receive_textBrowser->toPlainText();
+    if (currentSettings.isTimeDisplay) {
+        direction_str = direction ? " <- " : " -> ";
+        if (direction) {
+            contents += CommonHelper::getCurrTimeStr() + direction_str + text;
+        } else {
+            QStringList texts = text.split("\n");
+            for (int i = 0; i < texts.length(); i++) {
+                if (contents.right(1) == "\n") {
+                    contents += CommonHelper::getCurrTimeStr() + direction_str + texts[i];
+                } else {
+                    contents += texts[i];
+                }
+            }
+        }
+    } else {
+        contents += text;
+    }
+    ui->receive_textBrowser->setText(contents);
 
     // 将光标移动到最后位置
     QTextCursor tmpCursor = ui->receive_textBrowser->textCursor();
@@ -651,8 +671,7 @@ void MainWindow::writeData()
         updateUi(currentSettings);
     }
 }
-//! [6]
-//! [7]
+
 void MainWindow::readData()
 {
     QByteArray data = serial->readAll();
@@ -668,7 +687,6 @@ void MainWindow::readData()
         currentIndexChanged();
     }
 }
-//! [7]
 
 //! [8]
 //! 添加除错功能，解决强制拔出时程序崩溃。
