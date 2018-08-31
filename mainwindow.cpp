@@ -102,7 +102,7 @@ void MainWindow::init()
     // 初始化定时发送定时器
     autoSendTimer = new QTimer(this);
     //将定时器超时信号与槽(功能函数)联系起来
-    connect( autoSendTimer,SIGNAL(timeout()), this, SLOT(writeData()) );
+    connect(autoSendTimer,SIGNAL(timeout()), this, SLOT(writeData()));
 
     //读出上次保存Settings
     currentSettings = doSettings(false, Settings());
@@ -484,7 +484,7 @@ void MainWindow::updateSettings()
     currentSettings.name = ui->serialPortInfoListBox->currentText();
 
     // Baud Rate
-    if (ui->baudRateBox->currentIndex() == 4) {
+    if (ui->baudRateBox->currentIndex() == 8) {
         // custom baud rate
         currentSettings.baudRate = ui->baudRateBox->currentText().toInt();
     } else {
@@ -549,18 +549,19 @@ void MainWindow::updateUi(Settings p)
 
 bool MainWindow::setParameter(QSerialPort *serial, Settings settings)
 {
-    bool ret;
     Settings p = settings;
 
-    if (serial->setBaudRate(p.baudRate)
-            && serial->setDataBits(p.dataBits)
-            && serial->setParity(p.parity)
-            && serial->setStopBits(p.stopBits)
-            && serial->setFlowControl(p.flowControl)) {
-        ret = true;
-    } else
-        ret = false;
-    return ret;
+    if (!serial->setBaudRate(p.baudRate)
+            || !serial->setDataBits(p.dataBits)
+            || !serial->setParity(p.parity)
+            || !serial->setStopBits(p.stopBits)
+            || !serial->setFlowControl(p.flowControl)
+            || !serial->setDataTerminalReady(p.isDtr)
+            || !serial->setRequestToSend(p.isRts)) {
+        return false;
+    }
+
+    return true;
 }
 
 //! [4]
