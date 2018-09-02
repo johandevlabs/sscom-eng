@@ -300,9 +300,9 @@ void MainWindow::currentIndexChanged()
             currentSettings.sendStringCache = str_util::hexToString(now.sendCache);
         }
         /* 将小写换成大写 */
-        int curPos = ui->sendLineEdit->cursorPosition();
-        ui->sendLineEdit->setText(ui->sendLineEdit->text().toUpper());
-        ui->sendLineEdit->setCursorPosition(curPos);
+        // int curPos = ui->sendLineEdit->cursorPosition();
+        // ui->sendLineEdit->setText(ui->sendLineEdit->text().toUpper());
+        // ui->sendLineEdit->setCursorPosition(curPos);
     }
 
     // 更新发送方式

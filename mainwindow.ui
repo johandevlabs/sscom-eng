@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>620</width>
-    <height>520</height>
+    <width>880</width>
+    <height>738</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>620</width>
-    <height>520</height>
+    <width>880</width>
+    <height>738</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>620</width>
-    <height>520</height>
+    <width>16777215</width>
+    <height>16777215</height>
    </size>
   </property>
   <property name="font">
@@ -35,7 +35,7 @@
     <property name="geometry">
      <rect>
       <x>5</x>
-      <y>317</y>
+      <y>529</y>
       <width>141</width>
       <height>181</height>
      </rect>
@@ -287,7 +287,7 @@
     <property name="geometry">
      <rect>
       <x>140</x>
-      <y>315</y>
+      <y>527</y>
       <width>21</width>
       <height>181</height>
      </rect>
@@ -301,8 +301,8 @@
      <rect>
       <x>4</x>
       <y>10</y>
-      <width>610</width>
-      <height>261</height>
+      <width>871</width>
+      <height>471</height>
      </rect>
     </property>
     <property name="inputMethodHints">
@@ -313,10 +313,16 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>266</y>
-      <width>621</width>
+      <y>478</y>
+      <width>881</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -326,10 +332,16 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>305</y>
-      <width>901</width>
+      <y>517</y>
+      <width>881</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -339,8 +351,8 @@
     <property name="geometry">
      <rect>
       <x>146</x>
-      <y>318</y>
-      <width>471</width>
+      <y>530</y>
+      <width>725</width>
       <height>181</height>
      </rect>
     </property>
@@ -352,7 +364,7 @@
     </property>
     <property name="maximumSize">
      <size>
-      <width>471</width>
+      <width>725</width>
       <height>181</height>
      </size>
     </property>
@@ -361,9 +373,15 @@
       <rect>
        <x>213</x>
        <y>1</y>
-       <width>321</width>
-       <height>149</height>
+       <width>511</width>
+       <height>148</height>
       </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
      <property name="minimumSize">
       <size>
@@ -371,39 +389,6 @@
        <height>148</height>
       </size>
      </property>
-    </widget>
-    <widget class="QWidget" name="">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>150</y>
-       <width>461</width>
-       <height>29</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_8">
-      <item>
-       <widget class="QLineEdit" name="sendLineEdit"/>
-      </item>
-      <item>
-       <widget class="QPushButton" name="send_pushButton">
-        <property name="maximumSize">
-         <size>
-          <width>71</width>
-          <height>27</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>发送</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </widget>
     <widget class="QLabel" name="label_7">
      <property name="geometry">
@@ -418,7 +403,7 @@
       <string>SSCOM LINUX</string>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -478,7 +463,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -504,7 +489,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>121</x>
@@ -583,7 +568,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -648,13 +633,46 @@
       </item>
      </layout>
     </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>150</y>
+       <width>711</width>
+       <height>29</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_8">
+      <item>
+       <widget class="QLineEdit" name="sendLineEdit"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="send_pushButton">
+        <property name="maximumSize">
+         <size>
+          <width>71</width>
+          <height>27</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>发送</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>1</x>
-      <y>282</y>
-      <width>617</width>
+      <y>494</y>
+      <width>871</width>
       <height>29</height>
      </rect>
     </property>
@@ -809,7 +827,14 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
