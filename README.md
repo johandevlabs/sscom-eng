@@ -1,5 +1,5 @@
 # sscom
-Linux版本 串口调试助手
+Linux Version Serial Port Debugging Assistant
 Hot To build
 ```
 sudo apt-get install qtcreator libqt5serialport5-dev libudev-dev
@@ -9,8 +9,8 @@ qmake
 make
 ```
 
-###预览效果
+### Preview Effect
 ![GitHub Logo](/assert/sscom_for_linux_0.2.png)
 
-###未实现功能
+### Unimplemented Features
 ![GitHub Logo](/assert/sscom_for_linux_0.2_unspport.png)
