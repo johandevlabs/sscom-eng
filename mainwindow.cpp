@@ -149,7 +149,7 @@ void MainWindow::init()
 
     // 设置窗口标题
     QDateTime dt = QDateTime::fromTime_t((uint)CommonHelper::getDateFromMacro(__DATE__));
-    this->setWindowTitle("sscom for linux " VERSION ", 作者: " AUTHOR " " + dt.toString("yyyy/MM"));
+    this->setWindowTitle("sscom for linux " VERSION ", Author: " AUTHOR " " + dt.toString("yyyy/MM"));
 
     // 设置窗口图标
     this->setWindowIcon(QIcon(":/ico/sscom"));
@@ -157,7 +157,7 @@ void MainWindow::init()
     // 状态
     isOn = false;
     mLedLabel->setPixmap(QPixmap(":/led/off"));
-    mOpenFileLineEdit->setText(tr("文件名"));
+    mOpenFileLineEdit->setText(tr("Filename"));
     mFilePath = ui->openfile_lineEdit->text();
     mTimerSendLineEdit->setValidator(numberOnlyValidator);
 
@@ -202,7 +202,7 @@ void MainWindow::init()
     mStatusBar->addWidget(mFinallyLabel);
 
     // 2.更新文字
-    mOpenSerialButton->setText("打开串口");
+    mOpenSerialButton->setText("Open Serial Port");
     // 3.禁止发送按键
     mSendButton->setDisabled(true);
     // 4.禁止发送文件按键
@@ -457,7 +457,7 @@ void MainWindow::on_openfile_pushButton_released()
     }
 
     // 打开新文件
-    mFilePath = QFileDialog::getOpenFileName(this, tr("打开"), mFilePath, tr("All Files(*.* *.**)"));
+    mFilePath = QFileDialog::getOpenFileName(this, tr("Open"), mFilePath, tr("All Files(*.* *.**)"));
     if(mFilePath.length() != 0) {
         mOpenFileLineEdit->setText(mFilePath);
     }
@@ -497,9 +497,9 @@ void MainWindow::fillPortsInfo()
 void MainWindow::updateSettings()
 {
     if(serial->isOpen())
-        currentSettings.stringStatus = "已打开";
+        currentSettings.stringStatus = "Already Opened";
     else
-        currentSettings.stringStatus = "已关闭";
+        currentSettings.stringStatus = "Already Closed";
 
     currentSettings.name = ui->serialPortInfoListBox->currentText();
 
@@ -622,7 +622,7 @@ void MainWindow::closeSerialPort()
 {
     mLedLabel->setPixmap(QPixmap(":/led/off"));
     // 2.更新文字
-    mOpenSerialButton->setText("打开串口");
+    mOpenSerialButton->setText("Open Serial Port");
     // 3.禁止发送按键
     mSendFileButton->setDisabled(true);
     // 4.禁止发送文件按键
