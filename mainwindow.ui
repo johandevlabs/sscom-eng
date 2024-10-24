@@ -60,7 +60,7 @@
           <string notr="true"> qproperty-wordWrap: true;</string>
          </property>
          <property name="text">
-          <string>串口号</string>
+          <string>Serial Port</string>
          </property>
         </widget>
        </item>
@@ -98,7 +98,7 @@
           <string notr="true"> qproperty-wordWrap: true;</string>
          </property>
          <property name="text">
-          <string>波特率</string>
+          <string>Baud Rate</string>
          </property>
         </widget>
        </item>
@@ -139,7 +139,7 @@
           <string notr="true"> qproperty-wordWrap: true;</string>
          </property>
          <property name="text">
-          <string>数据位</string>
+          <string>Data Bits</string>
          </property>
         </widget>
        </item>
@@ -180,7 +180,7 @@
           <string notr="true"> qproperty-wordWrap: true;</string>
          </property>
          <property name="text">
-          <string>停止位</string>
+          <string>Stop Bits</string>
          </property>
         </widget>
        </item>
@@ -218,7 +218,7 @@
           <string notr="true"> qproperty-wordWrap: true;</string>
          </property>
          <property name="text">
-          <string>校验位</string>
+          <string>Parity</string>
          </property>
         </widget>
        </item>
@@ -256,7 +256,7 @@
           <string notr="true"> qproperty-wordWrap: true;</string>
          </property>
          <property name="text">
-          <string>流  控</string>
+          <string>Flow Control</string>
          </property>
         </widget>
        </item>
@@ -427,7 +427,7 @@
          </font>
         </property>
         <property name="text">
-         <string>打开串口</string>
+         <string>Open Serial Port</string>
         </property>
        </widget>
       </item>
@@ -514,7 +514,7 @@
          </size>
         </property>
         <property name="text">
-         <string>HEX显示</string>
+         <string>HEX Display</string>
         </property>
        </widget>
       </item>
@@ -533,14 +533,14 @@
          </size>
         </property>
         <property name="text">
-         <string>HEX发送</string>
+         <string>HEX Send</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="timedisplay_checkBox">
         <property name="text">
-         <string>显示时间</string>
+         <string>Show Time</string>
         </property>
        </widget>
       </item>
@@ -559,7 +559,7 @@
          </size>
         </property>
         <property name="text">
-         <string>发送新行</string>
+         <string>Send New Line</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -587,7 +587,7 @@
          </size>
         </property>
         <property name="text">
-         <string>定时发送</string>
+         <string>Timed Send</string>
         </property>
         <property name="checked">
          <bool>false</bool>
@@ -627,7 +627,7 @@
          <string notr="true"> qproperty-wordWrap: true;</string>
         </property>
         <property name="text">
-         <string>ms/次</string>
+         <string>ms/Time</string>
         </property>
        </widget>
       </item>
@@ -660,7 +660,7 @@
          </font>
         </property>
         <property name="text">
-         <string>发送</string>
+         <string>Send</string>
         </property>
        </widget>
       </item>
@@ -691,7 +691,7 @@
         </font>
        </property>
        <property name="text">
-        <string>打开文件</string>
+        <string>Open File</string>
        </property>
       </widget>
      </item>
@@ -712,7 +712,7 @@
         </font>
        </property>
        <property name="text">
-        <string>发送文件</string>
+        <string>Send File</string>
        </property>
       </widget>
      </item>
@@ -730,7 +730,7 @@
         </font>
        </property>
        <property name="text">
-        <string>停止</string>
+        <string>Stop</string>
        </property>
       </widget>
      </item>
@@ -748,7 +748,7 @@
         </font>
        </property>
        <property name="text">
-        <string>保存窗口</string>
+        <string>Save Window</string>
        </property>
       </widget>
      </item>
@@ -766,7 +766,7 @@
         </font>
        </property>
        <property name="text">
-        <string>清除窗口</string>
+        <string>Clear Window</string>
        </property>
       </widget>
      </item>
@@ -784,7 +784,7 @@
         </font>
        </property>
        <property name="text">
-        <string>帮助</string>
+        <string>Help</string>
        </property>
       </widget>
      </item>
@@ -820,7 +820,7 @@
         </font>
        </property>
        <property name="text">
-        <string>扩展</string>
+        <string>Extend</string>
        </property>
       </widget>
      </item>
